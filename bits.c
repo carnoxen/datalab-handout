@@ -259,21 +259,32 @@ int logicalNeg(int x)
  */
 int howManyBits(int x)
 {
-    int count16, count8, count4, count2, count1, count0;
+    int count = 1;
     int xAbs = x ^ (x >> 31);
+    int bitExists = 0;
 
-    count16 = !!(xAbs >> 16) << 4;
-    xAbs = xAbs >> count16;
-    count8 = !!(xAbs >> 8) << 3;
-    xAbs = xAbs >> count8;
-    count4 = !!(xAbs >> 4) << 2;
-    xAbs = xAbs >> count4;
-    count2 = !!(xAbs >> 2) << 1;
-    xAbs = xAbs >> count2;
-    count1 = !!(xAbs >> 1);
-    xAbs = xAbs >> count1;
-    count0 = xAbs + 1;
-    return count16 + count8 + count4 + count2 + count1 + count0;
+    bitExists = !!(xAbs >> 16) << 4;
+    xAbs = xAbs >> bitExists;
+    count = count + bitExists;
+
+    bitExists = !!(xAbs >> 8) << 3;
+    xAbs = xAbs >> bitExists;
+    count = count + bitExists;
+
+    bitExists = !!(xAbs >> 4) << 2;
+    xAbs = xAbs >> bitExists;
+    count = count + bitExists;
+
+    bitExists = !!(xAbs >> 2) << 1;
+    xAbs = xAbs >> bitExists;
+    count = count + bitExists;
+
+    bitExists = !!(xAbs >> 1);
+    xAbs = xAbs >> bitExists;
+    count = count + bitExists;
+
+    bitExists = xAbs;
+    return count + bitExists;
 }
 //float
 /* 
